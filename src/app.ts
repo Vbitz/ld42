@@ -24,9 +24,25 @@ class Game {
   run() {
     document.body.appendChild(this.renderer.domElement);
 
+    this.renderer.setClearColor(new THREE.Color('cornflowerblue'));
+
+    this.camera.position.z = -10;
+
+    this.camera.rotateX(Math.PI);
+
+    const testingCube = new THREE.Mesh(
+        new THREE.PlaneGeometry(100, 100),
+        new THREE.MeshBasicMaterial({color: new THREE.Color('red')}));
+
+    this.scene.add(testingCube);
+
     this.onResize();
 
-    this.update();
+    window.addEventListener('resize', this.onResize.bind(this));
+
+    setTimeout(() => {
+      this.update();
+    }, 0);
   }
 
   private onResize() {
@@ -52,5 +68,6 @@ class Game {
 
 document.addEventListener('DOMContentLoaded', () => {
   const game = new Game();
+
   game.run();
 });
