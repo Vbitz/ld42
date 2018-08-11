@@ -94,11 +94,15 @@ class GameCanvas extends GameObject {
         this.setTile(freePos, newTile);
       }
 
-      this.nextSpawnTime = now() + 2500;
+      this.nextSpawnTime = now() + 750;
     }
   }
 
-  private getTilePosition(pos: TilePosition): THREE.Vector3 {
+  private getTilePosition(pos: TilePosition, size: TileSize): THREE.Vector3 {
+    if (size !== TileSize.OneByOne) {
+      throw new Error('Not Implemented');
+    }
+
     return new THREE.Vector3(
         (pos.x * this.tileSize + (this.tileSize / 2)) -
             (this.fieldWidth * this.tileSize) / 2,
@@ -118,7 +122,7 @@ class GameCanvas extends GameObject {
 
     this.field[pos.x][pos.y] = tile;
 
-    tile.position.set(0, 0, 0).add(this.getTilePosition(pos));
+    tile.position.set(0, 0, 0).add(this.getTilePosition(pos, tile.size));
 
     this.add(tile);
   }
@@ -143,9 +147,11 @@ class GameCanvas extends GameObject {
 class Game {
   private renderer: THREE.WebGLRenderer;
   private scene = new THREE.Scene();
+  
+  // I'd like to switch to a perspective camera but it would be more difficult to do input controls.
   private camera: THREE.OrthographicCamera;
 
-  private gameCanvas = new GameCanvas(8, 8, 64);
+  private gameCanvas = new GameCanvas(12, 6, 90);
 
   private tickTimer = 0;
 
