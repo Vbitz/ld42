@@ -1,0 +1,25 @@
+{
+  "name": "ld42",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/three": "^0.92.16",
+    "gts": "^0.8.0",
+    "typescript": "~2.8.0"
+  },
+  "scripts": {
+    "start:dev": "parcel --no-hmr -p 8080 src/index.html",
+    "check": "gts check",
+    "clean": "gts clean",
+    "compile": "tsc -p .",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run check"
+  },
+  "dependencies": {
+    "parcel-bundler": "^1.9.7",
+    "three": "^0.95.0"
+  }
+}
